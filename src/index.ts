@@ -5,6 +5,7 @@ import git from "git-last-commit";
 import dotenv from "dotenv";
 import KretaScraper from "./services/KretaScraper";
 import Config from "./services/Config";
+import CoronaService from "./services/CoronaService";
 
 const client = new Discord.Client();
 const moment = require('moment');
@@ -15,6 +16,8 @@ client.on("ready", () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	UtilityService.client = client;
 	KretaScraper.discord = client;
+	CoronaService.client = client;
+
 	client.user.setActivity("A te betyár táv tanulási robotod !");
 	//db.save();
 
@@ -87,6 +90,11 @@ client.on("message", async message => {
 	{
 		sendHelpGuide(message);
 		message.delete();
+	}
+
+	if (command === "stats")
+	{
+		CoronaService.postCoronaStats(message);
 	}
 
 
