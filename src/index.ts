@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import KretaScraper from "./services/KretaScraper";
 import Config from "./services/Config";
 import CoronaService from "./services/CoronaService";
+import TeachingService from "./services/TeachingService";
 
 const client = new Discord.Client();
 const moment = require('moment');
@@ -17,6 +18,7 @@ client.on("ready", () => {
 	UtilityService.client = client;
 	KretaScraper.discord = client;
 	CoronaService.client = client;
+	TeachingService.client = client;
 
 	client.user.setActivity("A te betyár táv tanulási robotod !");
 	//db.save();
@@ -97,7 +99,10 @@ client.on("message", async message => {
 		CoronaService.postCoronaStats(message);
 	}
 
-
+	if (command === "hianyzo")
+	{
+		TeachingService.displayAbsence(message);
+	}
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
